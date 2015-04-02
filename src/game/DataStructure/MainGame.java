@@ -41,6 +41,7 @@ public class MainGame {
 		undoList.push(stateInitial);
 		gameSize=GAME_SETTING.GAME_SIZE;
 		simpleHillClimbing=new SHC(stateInitial);
+		System.out.println("Using SHC");
 		roles=new RolesImplement(gameSize);
 		
 		drawState();
@@ -51,7 +52,7 @@ public class MainGame {
 		while (true)
 		{
 			
-			HelperClass.doGameSlowly1();
+			HelperClass.doGameSlowlyTimer();
 			
 			GAMEINPUT gameInput=simpleHillClimbing.getInput(undoList.peek());
 			
@@ -65,7 +66,9 @@ public class MainGame {
 			 * - Redo key
 			 * - Reset key
 			 */
+			
 			GameState currentGameState=processInput(gameInput);
+			
 			
 			currentGameState=getRandomNextState(currentGameState);
 			

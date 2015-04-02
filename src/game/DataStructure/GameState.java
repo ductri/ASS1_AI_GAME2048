@@ -25,4 +25,16 @@ public class GameState {
 				data[i][j]=gameState.data[i][j];
 	}
 	
+	public int[][] cloneData()
+	{
+		int[][] temp=new int[data.length][];
+		for (int i=0;i<temp.length;i++)
+			temp[i]=new int[data.length];
+		
+		for (int i=0;i<data.length;i++)
+			for (int j=0;j<data.length;j++)
+				temp[i][j]=data[i][j];
+		return temp;
+				
+	}
 }

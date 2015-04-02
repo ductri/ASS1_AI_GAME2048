@@ -1,0 +1,54 @@
+diff --git a/.settings/org.eclipse.core.resources.prefs b/.settings/org.eclipse.core.resources.prefs
+index c3efa44..2db4d1f 100644
+--- a/.settings/org.eclipse.core.resources.prefs
++++ b/.settings/org.eclipse.core.resources.prefs
+@@ -1,4 +1,5 @@
+ eclipse.preferences.version=1
+ encoding//src/AI/SHC.java=UTF-8
++encoding//src/Note=UTF-8
+ encoding//src/game/DataStructure/MainGame.java=UTF-8
+ encoding//src/game/Function/RolesImplement.java=UTF-8
+diff --git a/src/AI/SHC.java b/src/AI/SHC.java
+index 3fdbdb8..1c52193 100644
+--- a/src/AI/SHC.java
++++ b/src/AI/SHC.java
+@@ -112,4 +112,5 @@ public class SHC implements NextStep{
+ 		return indexMax;
+ 	}
+ 
++	
+ }
+diff --git a/src/game/DataStructure/MainGame.java b/src/game/DataStructure/MainGame.java
+index 8f29b3d..fe6b504 100644
+--- a/src/game/DataStructure/MainGame.java
++++ b/src/game/DataStructure/MainGame.java
+@@ -41,6 +41,7 @@ public class MainGame {
+ 		undoList.push(stateInitial);
+ 		gameSize=GAME_SETTING.GAME_SIZE;
+ 		simpleHillClimbing=new SHC(stateInitial);
++		System.out.println("Using SHC");
+ 		roles=new RolesImplement(gameSize);
+ 		
+ 		drawState();
+@@ -51,7 +52,7 @@ public class MainGame {
+ 		while (true)
+ 		{
+ 			
+-			HelperClass.doGameSlowly1();
++			HelperClass.doGameSlowlyTimer();
+ 			
+ 			GAMEINPUT gameInput=simpleHillClimbing.getInput(undoList.peek());
+ 			
+diff --git a/src/game/Support/HelperClass.java b/src/game/Support/HelperClass.java
+index bf84864..ca0a74c 100644
+--- a/src/game/Support/HelperClass.java
++++ b/src/game/Support/HelperClass.java
+@@ -14,7 +14,7 @@ public class HelperClass {
+ 		return data;
+ 	}
+ 	
+-	public static void doGameSlowly1()
++	public static void doGameSlowlyTimer()
+ 	{
+ 		try {
+ 			Thread.sleep(GAME_SETTING.SPEED);

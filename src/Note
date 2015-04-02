@@ -1,0 +1,4 @@
+- Ô lớn nhất đặt tại góc DƯỚI bên TRÁI
+- Mỗi bước cố gắng tăng số ô trống
+- Mỗi bước cố gắng tăng số lớn nhất
+- Mỗi bước cố gắng tăng số lượng các ô có số lớn. VD: (2,2,4) < (4,4)

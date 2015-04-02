@@ -14,7 +14,7 @@ public class HelperClass {
 		return data;
 	}
 	
-	public static void doGameSlowly1()
+	public static void doGameSlowlyTimer()
 	{
 		try {
 			Thread.sleep(GAME_SETTING.SPEED);
