@@ -65,7 +65,9 @@ public class MainGame {
 			 * - Redo key
 			 * - Reset key
 			 */
+			
 			GameState currentGameState=processInput(gameInput);
+			
 			
 			currentGameState=getRandomNextState(currentGameState);
 			

@@ -1,255 +1,145 @@
 package AI.sss_pattern.user_define;
+import game.DataStructure.GameState;
+import game.Function.Roles;
+import game.Function.RolesImplement;
+import game.Setting.GAME_SETTING;
+
 import java.util.ArrayList;
 
-import AI.sss_pattern.core.datastructure.Condition;
-import AI.sss_pattern.core.datastructure.Move;
 import AI.sss_pattern.core.datastructure.State;
-import AI.sss_pattern.core.datastructure.StateNext;
+
 
 public class Setting {
-	public ArrayList<Move> ruleOfMove;
 	public State stateInit;
 	public State stateGoal;
-	public Setting(State stateInit, State stateGoal)
+	public boolean isDfs;
+	public Setting(State stateInit, State stateGoal, boolean isDfs)
 	{
 		this.stateInit=stateInit;
 		this.stateGoal=stateGoal;
-		
+		this.isDfs=isDfs;
 		//Implement rule of moving
-		ruleOfMove=new ArrayList<Move>();
-		initRules();
-	}
-	
-	private boolean checkState(State state)
-	{
-		
-		int X=state.params[0];
-		int Y=state.params[1];
-		int Z=state.params[2];
-		int T=state.params[3];
-		
-		if ((X >= Y && Z >= T) ||
-			(X==0 && Z >= T) ||
-			(X >= Y && Z==0))
-			return true;
-		return false;
-				
-	}
-	public void initRules()
-	{
-		//***************
-		//Rule1
-		//***************
-		Condition condition=new Condition() {
-			public boolean isLegal(State state) {
-				if ((state.params[0]-state.params[4])>-1 &&
-						(state.params[1]-state.params[4])>-1 &&
-						(state.params[2]+state.params[4])>-1 &&
-						(state.params[3]+state.params[4])>-1)
-				{
-					int[] params=new int[state.params.length];
-					params[0]=state.params[0]-state.params[4];
-					params[1]=state.params[1]-state.params[4];
-					params[2]=state.params[2]+state.params[4];
-					params[3]=state.params[3]+state.params[4];
-					params[4]=-state.params[4];
-					State s=new State(params);
-					if (checkState(s)) return true;
-				}
-				return false;
-			}
-		};
-		StateNext child=new StateNext() {
-			public State getNext(State state) {
-				int[] params=new int[state.params.length];
-				params[0]=state.params[0]-state.params[4];
-				params[1]=state.params[1]-state.params[4];
-				params[2]=state.params[2]+state.params[4];
-				params[3]=state.params[3]+state.params[4];
-				params[4]=-state.params[4];
-				State s=new State(params);
-				
-				return s;
-			}
-		};
-		
-		Move m=new Move(condition, child);
-		ruleOfMove.add(m);
-		
-		
-		
-		//***************
-		//Rule4
-		//***************
-		condition=new Condition() {
-			public boolean isLegal(State state) {
-				int[] params=new int[state.params.length];
-				params[0]=state.params[0]-state.params[4];
-				if (params[0]<=-1) return false;
-				params[1]=state.params[1];
-				params[2]=state.params[2]+state.params[4];
-				if (params[2]<=-1) return false;
-				params[3]=state.params[3];
-				params[4]=-state.params[4];
-				State s=new State(params);
-				
-				if (!checkState(s)) return false;
-				return true;
-			}
-		};
-		child=new StateNext() {
-			public State getNext(State state) {
-				int[] params=new int[state.params.length];
-				params[0]=state.params[0]-state.params[4];
-				params[1]=state.params[1];
-				params[2]=state.params[2]+state.params[4];
-				params[3]=state.params[3];
-				params[4]=-state.params[4];
-				State s=new State(params);
-				
-				return s;
-			}
-		};
-		
-		m=new Move(condition, child);
-		ruleOfMove.add(m);
-	
-		
-		//***************
-		//Rule3
-		//***************
-		condition=new Condition() {
-			public boolean isLegal(State state) {
-				int[] params=new int[state.params.length];
-				params[0]=state.params[0];
-				params[1]=state.params[1]-2*state.params[4];
-				if (params[1]<=-1) return false;
-				params[2]=state.params[2];
-				params[3]=state.params[3]+2*state.params[4];
-				if (params[3]<=-1) return false;
-				params[4]=-params[4];
-				State s=new State(params);
-				if (!checkState(s)) return false;
-				
-				return true;
-			}
-		};
-		child=new StateNext() {
-			public State getNext(State state) {
-				int[] params=new int[state.params.length];
-				params[0]=state.params[0];
-				params[1]=state.params[1]-2*state.params[4];
-				params[2]=state.params[2];
-				params[3]=state.params[3]+2*state.params[4];
-				params[4]=-state.params[4];
-				State s=new State(params);
-				
-				return s;
-			}
-		};
-		
-		m=new Move(condition, child);
-		ruleOfMove.add(m);
-		
-		//***************
-		//Rule5
-		//***************
-		condition=new Condition() {
-			public boolean isLegal(State state) {
-				int[] params=new int[state.params.length];
-				params[0]=state.params[0]-2*state.params[4];
-				if (params[0]<=-1) return false;
-				params[1]=state.params[1];
-				params[2]=state.params[2]+2*state.params[4];
-				if (params[2]<=-1) return false;
-				params[3]=state.params[3];
-				params[4]=-state.params[4];
-				State s=new State(params);
-				
-				if (!checkState(s)) return false;
-				return true;
-			}
-		};
-		child=new StateNext() {
-			public State getNext(State state) {
-				int[] params=new int[state.params.length];
-				params[0]=state.params[0]-2*state.params[4];
-				params[1]=state.params[1];
-				params[2]=state.params[2]+2*state.params[4];
-				params[3]=state.params[3];
-				params[4]=-state.params[4];
-				State s=new State(params);
-				
-				return s;
-			}
-		};
-		m=new Move(condition, child);
-		ruleOfMove.add(m);
-		
-		//***************
-		//Rule2
-		//***************
-		condition=new Condition() {
-			public boolean isLegal(State state) {
-				int[] params=new int[state.params.length];
-				params[0]=state.params[0];
-				params[1]=state.params[1]-state.params[4];
-				if (params[1]<=-1) return false;
-				params[2]=state.params[2];
-				params[3]=state.params[3]+state.params[4];
-				if (params[3]<=-1) return false;
-				params[4]=-params[4];
-				State s=new State(params);
-				if (!checkState(s)) return false;
-				
-				return true;
-			}
-		};
-		child=new StateNext() {
-			public State getNext(State state) {
-				int[] params=new int[state.params.length];
-				params[0]=state.params[0];
-				params[1]=state.params[1]-state.params[4];
-				params[2]=state.params[2];
-				params[3]=state.params[3]+state.params[4];
-				params[4]=-state.params[4];
-				State s=new State(params);
-				
-				return s;
-			}
-		};
-		
-		m=new Move(condition, child);
-		ruleOfMove.add(m);
-
-	
 	}
 	
 	public boolean isGoal(State state)
 	{
-		if (stateGoal.equal(state))
-			return true;
-		else return false;
+		int[][] data=state.params;
+		for (int[] i:data)
+			for (int j:i)
+				if (j==16)
+					return true;
+		return false;		
 	}
 
 	public void myWrite(State state)
 	{
-		System.out.println(state.params[0]+","+state.params[1]+","+
-				state.params[2]+","+state.params[3]+bo(state.params[4])+" with index="+state.index);
-	}
-	private String bo(int t)
-	{
-		if (t>0) return " :Dang o bo A";
-		else return " :Dang o bo B";
+		System.out.println("******************************");
+		
+		int len=state.params.length;
+		for (int i=0;i<len;i++)
+		{
+			for (int j=0;j<len;j++)
+			{
+				if (state.params[i][j]!=0)
+					System.out.print(state.params[i][j]);
+				else System.out.print('_');
+				System.out.print('\t');
+			}
+			System.out.println("");
+		}
 	}
 	
 	public State[] moves(State state)
 	{
 		ArrayList<State> legalMoves=new ArrayList<State>();
-		for (Move i:ruleOfMove)
+		Roles roles =new RolesImplement(GAME_SETTING.GAME_SIZE);
+		
+		GameState t=roles.checkStateUP(new GameState(state.params));
+		State temp;
+		if (t!=null)
 		{
-			if (i.con.isLegal(state))
-				legalMoves.add(i.child.getNext(state));
+			temp=new State(t.cloneData());
+			for (int i=0;i<GAME_SETTING.GAME_SIZE;i++)
+			{
+				for (int j=0;j<GAME_SETTING.GAME_SIZE;j++)
+				{
+					if (t.data[i][j]==0)
+					{
+						temp.params[i][j]=2;
+						legalMoves.add(temp);
+						temp=new State(t.cloneData());
+						temp.params[i][j]=4;
+						legalMoves.add(temp);
+						temp=new State(t.cloneData());
+					}
+				}
+			}
+		}
+		
+		t=roles.checkStateLEFT(new GameState(state.params));
+		
+		if (t!=null)
+		{
+			temp=new State(t.cloneData());
+			for (int i=0;i<GAME_SETTING.GAME_SIZE;i++)
+			{
+				for (int j=0;j<GAME_SETTING.GAME_SIZE;j++)
+				{
+					if (t.data[i][j]==0)
+					{
+						temp.params[i][j]=2;
+						legalMoves.add(temp);
+						temp=new State(t.cloneData());
+						temp.params[i][j]=4;
+						legalMoves.add(temp);
+						temp=new State(t.cloneData());
+					}
+				}
+			}
+		}
+		
+		t=roles.checkStateDOWN(new GameState(state.params));
+		
+		if (t!=null)
+		{
+			temp=new State(t.cloneData());
+			for (int i=0;i<GAME_SETTING.GAME_SIZE;i++)
+			{
+				for (int j=0;j<GAME_SETTING.GAME_SIZE;j++)
+				{
+					if (t.data[i][j]==0)
+					{
+						temp.params[i][j]=2;
+						legalMoves.add(temp);
+						temp=new State(t.cloneData());
+						temp.params[i][j]=4;
+						legalMoves.add(temp);
+						temp=new State(t.cloneData());
+					}
+				}
+			}
+		}
+		
+		t=roles.checkStateRIGHT(new GameState(state.params));
+		
+		if (t!=null)
+		{
+			temp=new State(t.cloneData());
+			for (int i=0;i<GAME_SETTING.GAME_SIZE;i++)
+			{
+				for (int j=0;j<GAME_SETTING.GAME_SIZE;j++)
+				{
+					if (t.data[i][j]==0)
+					{
+						temp.params[i][j]=2;
+						legalMoves.add(temp);
+						temp=new State(t.cloneData());
+						temp.params[i][j]=4;
+						legalMoves.add(temp);
+						temp=new State(t.cloneData());
+					}
+				}
+			}
 		}
 		if (legalMoves.isEmpty()) return null;
 		State[] result=new State[legalMoves.size()];

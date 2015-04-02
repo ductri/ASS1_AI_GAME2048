@@ -1,5 +1,6 @@
 package AI.sss_pattern.core;
 import java.util.Stack;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import AI.sss_pattern.core.datastructure.Road;
 import AI.sss_pattern.core.datastructure.State;
@@ -7,13 +8,18 @@ import AI.sss_pattern.user_define.Setting;
 
 public class Search {
 	Stack<State> open;
+	LinkedBlockingQueue<State> open_q;
 	Stack<State> closed;
 	Road road;
 	Setting setting;
 	int index=0;
+	
+	int step=0;
 	public Search(Setting setting)
 	{
-		open=new Stack<State>();
+		if (setting.isDfs)
+			open=new Stack<State>();
+		else open_q=new LinkedBlockingQueue<State>();
 		closed=new Stack<State>();
 		road=new Road();
 		
@@ -23,30 +29,53 @@ public class Search {
 	{
 		State state=setting.stateInit;
 		state.index=index;
-		open.add(state);
+		if (setting.isDfs)
+			open.push(state);
+		else open_q.add(state);
 		path();
 	}
 	
 	private void path()
 	{
-		if (open.isEmpty()) {
-			System.out.print("No solution");
-			return;
+		
+		if (setting.isDfs)
+		{
+			if (open.isEmpty()) {
+				System.out.print("No solution");
+				return;
+			}
 		}
+		else 
+		{
+			if (open_q.isEmpty()) {
+				System.out.print("No solution");
+				return;
+			}
+		}
+		
 		
 		if (checkGoal()) return;
 		
-		State state=open.pop();
+		State state;
+		if (setting.isDfs)
+			state=open.pop();
+		else state=open_q.remove();
+		
+		setting.myWrite(state);
 		
 		road.addState(state);
 		closed.push(state);
 		getChildren(state);
+		
 		path();
 	}
 	
 	private boolean checkGoal()
 	{
-		State state=open.peek();
+		State state;
+		if (setting.isDfs)
+			state=open.peek();
+		else state=open_q.peek();
 		if (setting.isGoal(state))
 		{
 			for (State i:road.road)
@@ -58,7 +87,7 @@ public class Search {
 		else return false;
 	}
 	private void getChildren(State state)
-	{
+	{ 
 		State[] legalStates=setting.moves(state);
 		
 		if (legalStates==null) 
@@ -69,22 +98,34 @@ public class Search {
 		{
 			boolean exist=false;
 			for (int j=0;j<closed.size();j++)
-				if (closed.get(j).equal(i))
+				if (closed.get(j).equals(i))
 				{
 					exist=true;
 					break;
 				}
 			if (!exist)
-				for (int j=0;j<open.size();j++)
-					if (open.get(j).equal(i))
+				if (setting.isDfs)
+				{
+					for (int j=0;j<open.size();j++)
+						if (open.get(j).equals(i))
+						{
+							exist=true;
+							break;
+						}
+				}
+				else {
+					if (open_q.contains(i))
 					{
 						exist=true;
 						break;
 					}
+				}
 			if (!exist)
 			{
 				i.index=index;
-				open.push(i);
+				if (setting.isDfs)
+					open.push(i);
+				else open_q.add(i);
 			}
 		}
 	}
