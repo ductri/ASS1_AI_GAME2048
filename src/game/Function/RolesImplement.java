@@ -73,7 +73,6 @@ public class RolesImplement implements Roles{
 				{
 					gameState.data[i][j]=0;
 					gameState.data[pivot][j]*=2;
-					pivot--;
 				}
 				else //Giá trị 2 ô khác nhau
 				{
@@ -121,7 +120,6 @@ public class RolesImplement implements Roles{
 				{
 					gameState.data[i][j]=0;
 					gameState.data[i][pivot]*=2;
-					pivot++;
 				}
 				else //Giá trị 2 ô khác nhau
 				{
@@ -169,7 +167,6 @@ public class RolesImplement implements Roles{
 				{
 					gameState.data[i][j]=0;
 					gameState.data[i][pivot]*=2;
-					pivot--;
 				}
 				else //Giá trị 2 ô khác nhau
 				{
