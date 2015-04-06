@@ -69,6 +69,8 @@ public class MainGame {
 			
 			GameState currentGameState=processInput(gameInput);
 			
+			if (currentGameState.equals(undoList.peek()))
+				continue;
 			
 			currentGameState=getRandomNextState(currentGameState);
 			
