@@ -11,6 +11,7 @@ import java.util.Stack;
 import AI.InputTest;
 import AI.NextStep;
 import AI.SHC;
+import AI.UserInput;
 
 
 public class MainGame {
@@ -19,6 +20,7 @@ public class MainGame {
 	Random randomGenerator;
 	int gameSize;
 	NextStep simpleHillClimbing;
+	NextStep userInput;
 	InputProcess inputProcess;
 	Roles roles;
 	/*
@@ -41,6 +43,7 @@ public class MainGame {
 		undoList.push(stateInitial);
 		gameSize=GAME_SETTING.GAME_SIZE;
 		simpleHillClimbing=new SHC(stateInitial);
+		userInput=new UserInput();
 		System.out.println("Using SHC");
 		roles=new RolesImplement(gameSize);
 		
@@ -52,9 +55,10 @@ public class MainGame {
 		while (true)
 		{
 			
-			HelperClass.doGameSlowly2();
+			HelperClass.doGameSlowlyTimer();
 			
-			GAMEINPUT gameInput=simpleHillClimbing.getInput(undoList.peek());
+			GAMEINPUT gameInput=userInput.getInput(null);
+					//simpleHillClimbing.getInput(undoList.peek());
 			
 			/*InputTest inputTest=new InputTest();
 			GAMEINPUT gameInput=inputTest.getInput(undoList.peek());*/
