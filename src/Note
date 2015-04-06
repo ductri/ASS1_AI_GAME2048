@@ -1,0 +1,5 @@
+*** LẤY MIN
+- Ô lớn nhất đặt tại góc DƯỚI bên TRÁI --> không đi lên +0.2
+- Mỗi bước cố gắng tăng số ô trống: (16-số ô trống) > hs 16			w:0.3
+- Mỗi bước cố gắng tăng số lớn nhất: (2048-số lớn nhất) > hs 2048	w:0.5
+- Mỗi bước cố gắng cân bằng. 0 - balanceFactor > hs 1048576			w:0.2

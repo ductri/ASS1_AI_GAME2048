@@ -37,4 +37,15 @@ public class GameState {
 		return temp;
 				
 	}
+
+	@Override
+	public boolean equals(Object o)
+	{
+		GameState g=(GameState)o;
+		for (int i=0;i<data.length;i++)
+			for (int j=0;j<data.length;j++)
+				if (data[i][j]!=g.data[i][j])
+					return false;
+		return true;
+	}
 }

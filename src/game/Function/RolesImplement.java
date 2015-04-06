@@ -19,14 +19,13 @@ public class RolesImplement implements Roles{
 			while (i<gameSize)
 			{
 				/*
-				 * Giữa ô i và ô pivot không có sự cản trở nào
+				 * Giữa ô i và ô pivot luôn luôn không có sự cản trở
 				 */
 				//Nếu 2 ô bằng nhau, nhân đôi ô pivot, reset ô i, vị trí pivot không đổi
 				if (gameState.data[i][j]==gameState.data[pivot][j])
 				{
 					gameState.data[i][j]=0;
 					gameState.data[pivot][j]*=2;
-					pivot++;
 				}
 				else //Giá trị 2 ô khác nhau
 				{
