@@ -52,7 +52,7 @@ public class MainGame {
 		while (true)
 		{
 			
-			HelperClass.doGameSlowlyTimer();
+			HelperClass.doGameSlowly2();
 			
 			GAMEINPUT gameInput=simpleHillClimbing.getInput(undoList.peek());
 			
